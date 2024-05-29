@@ -25,7 +25,7 @@ export default function SellRoute() {
   const initialState: State = { message: "", status: undefined };
   const [state, formAction] = useFormState(SellProduct, initialState);
   const [json, setJson] = useState<null | JSONContent>(null);
-  const [images, setImages] = useState<string[] | null>([]);
+  const [images, setImages] = useState<string[] | null>(null);
   const [productFile, setProductFile] = useState<string | null>(null);
 
   useEffect(() => {
