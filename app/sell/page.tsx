@@ -14,7 +14,6 @@ import { SelectCategory } from "../components/SelectCategory";
 import { Textarea } from "@/components/ui/textarea";
 import { TipTapEditor } from "../components/Editor";
 import { UploadDropzone } from "../lib/uploadthing";
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { JSONContent } from "@tiptap/react";
 import { useFormState } from "react-dom";
@@ -54,6 +53,8 @@ export default function SellRoute() {
                 name="name"
                 type="text"
                 placeholder="Name of your Product"
+                required
+                minLength={3}
               />
               {state?.errors?.["name"]?.[0] && (
                 <p className="text-destructive">
@@ -72,7 +73,7 @@ export default function SellRoute() {
             </div>
             <div className="flex flex-col gap-y-2">
               <label>Price</label>
-              <Input name="price" placeholder="$28" type="number" />
+              <Input name="price" placeholder="$28" type="number"  required min={1}/>
               {state?.errors?.["price"]?.[0] && (
                 <p className="text-destructive">
                   {state?.errors?.["price"]?.[0]}
@@ -84,6 +85,8 @@ export default function SellRoute() {
               <Textarea
                 name="smallDescription"
                 placeholder="Describe your product here"
+                required
+                minLength={10}
               />
               {state?.errors?.["smallDescription"]?.[0] && (
                 <p className="text-destructive">
