@@ -20,6 +20,7 @@ import { useFormState } from "react-dom";
 import { SellProduct, State } from "../action";
 import { toast } from "sonner";
 import { SubmitButton } from "../components/SubmitButton";
+import { redirect } from "next/navigation";
 
 export default function SellRoute() {
   const initialState: State = { message: "", status: undefined };
@@ -31,6 +32,7 @@ export default function SellRoute() {
   useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message);
+      redirect("/");
     } else if (state.status === "error") {
       toast.error(state.message);
     }
@@ -73,7 +75,13 @@ export default function SellRoute() {
             </div>
             <div className="flex flex-col gap-y-2">
               <label>Price</label>
-              <Input name="price" placeholder="$28" type="number"  required min={1}/>
+              <Input
+                name="price"
+                placeholder="$28"
+                type="number"
+                required
+                min={1}
+              />
               {state?.errors?.["price"]?.[0] && (
                 <p className="text-destructive">
                   {state?.errors?.["price"]?.[0]}
