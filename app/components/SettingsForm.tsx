@@ -19,3 +19,13 @@ export function SettingsForm() {
     </form>
   );
 }
+
+// https://app.theheadstarter.com/auth/create-account?team=XQDXCV
+// XQDXCV
+
+// resume keywords for SWE
+// built
+// implemented
+// designed
+// created
+// developed
