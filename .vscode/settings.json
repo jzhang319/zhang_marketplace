@@ -3,6 +3,8 @@
     "clientside",
     "clsx",
     "Starterkit",
-    "Uploadthing"
+    "uikits",
+    "Uploadthing",
+    "utfs"
   ]
 }
