@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ProductCard } from "./ProductCard";
+import { LoadingProductCard, ProductCard } from "./ProductCard";
 import prisma from "../lib/db";
 import { link } from "fs";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface productProps {
   category: "newest" | "templates" | "uikits" | "icons";
@@ -103,10 +105,33 @@ async function getData({ category }: productProps) {
   }
 }
 
-export async function ProductRow({ category }: productProps) {
-  const data = await getData({ category: category });
+export function ProductRow({ category }: productProps) {
   return (
     <section className="mt-12">
+      <Suspense fallback={<LoadingState />}>
+        <LoadRows category={category} />
+      </Suspense>
+    </section>
+  );
+}
+
+function LoadingState() {
+  return (
+    <div>
+      <Skeleton className="h-8 w-56" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 gap-10 lg:grid-cols-3">
+        <LoadingProductCard />
+        <LoadingProductCard />
+        <LoadingProductCard />
+      </div>
+    </div>
+  );
+}
+
+async function LoadRows({ category }: productProps) {
+  const data = await getData({ category: category });
+  return (
+    <>
       <div className="md:flex md:items-center md:justify-between">
         <h2 className="text-2xl font-extrabold tracking-tighter">
           {data.title}
@@ -136,6 +161,6 @@ export async function ProductRow({ category }: productProps) {
           );
         })}
       </div>
-    </section>
+    </>
   );
 }

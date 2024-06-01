@@ -21,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
       <body className={inter.className}>
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <Navbar />
         {children}
         <Toaster richColors theme="light" closeButton />
