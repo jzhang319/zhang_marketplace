@@ -46,7 +46,9 @@ export function UserNav({ email, name, userImage }: userProps) {
           <DropdownMenuItem asChild>
             <Link href="/settings">Settings</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>test item</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/my-products">My Products</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>test item</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
