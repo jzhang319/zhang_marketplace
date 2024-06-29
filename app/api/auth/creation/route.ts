@@ -47,7 +47,7 @@ export async function GET() {
       },
     });
   }
-  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL;
 
   return NextResponse.redirect(`${baseUrl}`)
 }

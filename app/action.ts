@@ -135,7 +135,7 @@ export async function BuyProduct(FormData: FormData){
     }
   })
 
-  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL;
 
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
@@ -180,8 +180,8 @@ export async function CreateStripeAccountLink(){
     },
   })
 
-  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
-  
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL;
+
   const accountLink = await stripe.accountLinks.create({
     account: data?.connectedAccountId as string,
     refresh_url: `${baseUrl}/billing`,
