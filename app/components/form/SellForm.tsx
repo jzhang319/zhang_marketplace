@@ -31,7 +31,6 @@ export function SellForm() {
   useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message);
-      redirect("/");
     } else if (state.status === "error") {
       toast.error(state.message);
     }

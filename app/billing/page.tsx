@@ -8,7 +8,7 @@ import {
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import prisma from "../lib/db";
 import { Button } from "@/components/ui/button";
-import { CreateStripeAccountLink } from "../action";
+import { CreateStripeAccountLink, GetStripeStripeDashboardLink } from "../action";
 import { SubmitButton } from "../components/SubmitButton";
 
 async function getData(userId: string) {
@@ -42,6 +42,11 @@ export default async function BillingRoute() {
           {data?.stripeConnectedLinked === false && (
             <form action={CreateStripeAccountLink}>
               <SubmitButton title="Link your account to Stripe" />
+            </form>
+          )}
+          {data?.stripeConnectedLinked === true && (
+            <form action={GetStripeStripeDashboardLink}>
+              <SubmitButton title="View Dashboard" />
             </form>
           )}
         </CardContent>

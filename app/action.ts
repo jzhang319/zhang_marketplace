@@ -60,7 +60,7 @@ export async function SellProduct(prevState: any, formData: FormData){
     return state
   }
 
-  await prisma.product.create({
+  const data = await prisma.product.create({
     data: {
       name: validateFields.data.name,
       category: validateFields.data.category as CategoryTypes,
@@ -73,13 +73,7 @@ export async function SellProduct(prevState: any, formData: FormData){
     }
   })
 
-
-  const state: State = {
-    status: 'success',
-    message: 'Product has been created successfully!'
-  }
-
-  return state
+return redirect(`/product/${data.id}`)
 }
 
 
@@ -133,6 +127,11 @@ export async function BuyProduct(FormData: FormData){
       smallDescription: true,
       price: true,
       images: true,
+      User: {
+        select:{
+          connectedAccountId: true,
+        }
+      }
     }
   })
 
@@ -152,6 +151,12 @@ export async function BuyProduct(FormData: FormData){
         quantity: 1,
       },
     ],
+    payment_intent_data: {
+      application_fee_amount: (Math.round(data?.price as number * 100)) * 0.1,
+      transfer_data: {
+        destination: data?.User?.connectedAccountId as string,
+      },
+    },
     success_url: 'http://localhost:3000/payment/success',
     cancel_url: 'http://localhost:3000/payment/cancel',
   })
@@ -179,4 +184,24 @@ export async function CreateStripeAccountLink(){
     type: 'account_onboarding',
   })
   return redirect(accountLink.url)
+}
+
+export async function GetStripeStripeDashboardLink(){
+  const {getUser} = getKindeServerSession()
+  const user = await getUser()
+  if(!user){
+    throw new Error()
+  }
+  const data = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      connectedAccountId: true,
+    },
+  })
+  const loginlink = await stripe.accounts.createLoginLink(
+    data?.connectedAccountId as string
+  )
+  return redirect(loginlink.url)
 }
