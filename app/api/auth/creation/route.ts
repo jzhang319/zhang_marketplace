@@ -56,7 +56,7 @@ export async function GET() {
             redirectUrl = 'https://zhang-marketplace.vercel.app/';
             break;
         case 'render':
-            redirectUrl = 'https://zhang-marketplace.onrender.com/;
+            redirectUrl = 'https://zhang-marketplace.onrender.com/';
             break;
         // Add more cases as needed for additional platforms
         default:
