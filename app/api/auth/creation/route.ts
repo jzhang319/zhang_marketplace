@@ -47,23 +47,7 @@ export async function GET() {
       },
     });
   }
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
 
-  let redirectUrl = 'http://localhost:3000'; // Default to local development
-
-  if (process.env.NODE_ENV === 'production') {
-    switch (process.env.DEPLOYMENT_PLATFORM) {
-        case 'vercel':
-            redirectUrl = 'https://zhang-marketplace.vercel.app/';
-            break;
-        case 'render':
-            redirectUrl = 'https://zhang-marketplace.onrender.com/';
-            break;
-        // Add more cases as needed for additional platforms
-        default:
-            // Optionally handle unknown deployment platforms
-            break;
-    }
-  }
-
-  return NextResponse.redirect(redirectUrl);
+  return NextResponse.redirect(`${baseUrl}`)
 }

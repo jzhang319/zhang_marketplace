@@ -135,6 +135,8 @@ export async function BuyProduct(FormData: FormData){
     }
   })
 
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
+
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     line_items: [
@@ -157,8 +159,8 @@ export async function BuyProduct(FormData: FormData){
         destination: data?.User?.connectedAccountId as string,
       },
     },
-    success_url: 'http://localhost:3000/payment/success',
-    cancel_url: 'http://localhost:3000/payment/cancel',
+    success_url: `${baseUrl}/payment/success`,
+    cancel_url: `${baseUrl}/payment/cancel`,
   })
   return redirect(session.url as string)
 }
@@ -177,10 +179,13 @@ export async function CreateStripeAccountLink(){
       connectedAccountId: true,
     },
   })
+
+  const baseUrl = process.env.DEPLOYMENT_BASE_URL || 'http://localhost:3000';
+  
   const accountLink = await stripe.accountLinks.create({
     account: data?.connectedAccountId as string,
-    refresh_url: `http://localhost:3000/billing`,
-    return_url: `http://localhost:3000/return/${data?.connectedAccountId}`,
+    refresh_url: `${baseUrl}/billing`,
+    return_url: `${baseUrl}/return/${data?.connectedAccountId}`,
     type: 'account_onboarding',
   })
   return redirect(accountLink.url)
