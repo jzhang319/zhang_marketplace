@@ -1,3 +1,4 @@
+import ProductEmail from "@/app/components/ProductEmail";
 import prisma from "@/app/lib/db"
 import { stripe } from "@/app/lib/stripe"
 import { headers } from "next/headers"
@@ -23,7 +24,14 @@ export async function POST (req: Request) {
 
       const link = session.metadata?.link
 
-
+      const {data, error} = await resend.emails.send({
+        from: 'ZhangUI <onboarding@resend.dev>',
+        to: ['jzhang319@gmail.com'],
+        subject: 'Your Product from ZhangUI',
+        react: ProductEmail({
+          link: link as string,
+        })
+      })
       break;
     }
     default: {
