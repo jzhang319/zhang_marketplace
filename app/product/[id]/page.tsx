@@ -1,4 +1,6 @@
+import { BuyProduct } from "@/app/action";
 import { ProductDescription } from "@/app/components/ProductDescription";
+import { BuyButton } from "@/app/components/SubmitButton";
 import prisma from "@/app/lib/db";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,8 +25,8 @@ async function getData(id: string) {
       images: true,
       name: true,
       price: true,
-      id: true,
       createdAt: true,
+      id: true,
       User: {
         select: {
           profileImage: true,
@@ -67,9 +69,10 @@ export default async function ProductPage({
           {data?.name}
         </h1>
         <p className="mt-2 text-muted-foreground">{data?.smallDescription}</p>
-        <Button size="lg" className="w-full mt-10">
-          Buy for ${data?.price}
-        </Button>
+        <form action={BuyProduct}>
+          <input type="hidden" name="id" value={data?.id} />
+          <BuyButton price={data?.price as number} />
+        </form>
 
         <div className="border-t border-gray-200 mt-10 pt-10">
           <div className="grid grid-cols-2 w-full gap-y-3">
