@@ -1,5 +1,8 @@
 import { ProductRow } from "./components/ProductRow";
 
+// Prevent static generation - requires database connection at runtime
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-8 mb-24">
