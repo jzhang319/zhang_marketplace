@@ -1,4 +1,4 @@
-# Monthly dependency updates: security fixes are separate (automated security PRs).
+# Monthly dependency updates; security fixes are bundled into one PR per ecosystem.
 # Minor/patch only and grouped, so old apps don't get breaking major upgrades.
 version: 2
 updates:
@@ -8,6 +8,9 @@ updates:
       interval: "monthly"
     open-pull-requests-limit: 5
     groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
       minor-and-patch:
         update-types: ["minor", "patch"]
     ignore:
